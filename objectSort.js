@@ -30,17 +30,17 @@ let obj = {
     console.log(arr);
     console.log (arr.length);
 
-  const nameSort = (a,b) => {
-    var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-    var nameB = b.name.toUpperCase(); // ignore upper and lowercase
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-  // names must be equal
-  return 0;}
+    function dynamicSort(property) {
+      var sortOrder = 1;
+      if(property[0] === "-") {
+          sortOrder = -1;
+          property = property.substr(1);
+      }
+      return function (a,b) {
+          var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+          return result * sortOrder;
+      }
+  }
 
-  let sorted = arr.sort(nameSort);
+  let sorted = arr.sort(dynamicSort('-name'));
     console.log ({... sorted});
